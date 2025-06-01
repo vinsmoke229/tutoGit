@@ -27,18 +27,41 @@ button {
     background: #ff9800;
     color: #fff;
     cursor: pointer;
-    box-shadow: 0 0 20px #ff9800, 0 0 40px #fff700;
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow:
+        0 0 20px #ff9800,
+        0 0 40px #fff700,
+        0 0 80px #ff9800,
+        0 0 160px #fff700;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
     outline: none;
     position: relative;
     z-index: 2;
+    animation: neon-float 2s ease-in-out infinite alternate;
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 10px #fff700,
+        0 0 20px #ff9800,
+        0 0 40px #fff700;
+}
+
+@keyframes neon-float {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-10px) scale(1.05); }
 }
 
 button:hover {
-    transform: scale(1.1) rotate(-2deg);
-    box-shadow: 0 0 40px #ff9800, 0 0 80px #fff700;
+    transform: scale(1.15) rotate(-2deg);
+    box-shadow:
+        0 0 60px #ff9800,
+        0 0 120px #fff700,
+        0 0 200px #ff9800,
+        0 0 320px #fff700;
     background: #fff700;
     color: #111;
+    text-shadow:
+        0 0 20px #fff700,
+        0 0 40px #ff9800,
+        0 0 80px #fff700;
 }
 
 #fireworks {

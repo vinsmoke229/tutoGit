@@ -9,9 +9,11 @@
 <body>
     <button onclick="launchFireworks()">🎆 Feu d'artifice !</button>
     <canvas id="fireworks"></canvas>
+    <audio id="boom" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae7e2.mp3"></audio>
     <script>
         const canvas = document.getElementById('fireworks');
         const ctx = canvas.getContext('2d');
+        const boom = document.getElementById('boom');
         let particles = [];
 
         function resize() {
@@ -26,32 +28,59 @@
         }
 
         function launchFireworks() {
-            for (let i = 0; i < 60; i++) {
-                const angle = (i / 60) * 2 * Math.PI;
-                const speed = Math.random() * 4 + 2;
-                particles.push({
-                    x: canvas.width/2,
-                    y: canvas.height/2,
-                    vx: Math.cos(angle) * speed,
-                    vy: Math.sin(angle) * speed,
-                    alpha: 1,
-                    color: randomColor()
-                });
+            boom.currentTime = 0;
+            boom.play();
+            // Plusieurs explosions aléatoires
+            for (let j = 0; j < 3 + Math.floor(Math.random()*3); j++) {
+                const centerX = Math.random() * canvas.width * 0.8 + canvas.width * 0.1;
+                const centerY = Math.random() * canvas.height * 0.5 + canvas.height * 0.1;
+                const count = 40 + Math.floor(Math.random()*40);
+                const size = 2 + Math.random()*4;
+                for (let i = 0; i < count; i++) {
+                    const angle = (i / count) * 2 * Math.PI;
+                    const speed = Math.random() * 4 + 2;
+                    particles.push({
+                        x: centerX,
+                        y: centerY,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        alpha: 1,
+                        color: randomColor(),
+                        size: size,
+                        trail: []
+                    });
+                }
             }
         }
 
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.globalCompositeOperation = "destination-out";
+            ctx.fillStyle = "rgba(0,0,0,0.18)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.globalCompositeOperation = "lighter";
             particles.forEach((p, i) => {
+                // Traînée lumineuse
+                p.trail.push({x: p.x, y: p.y, alpha: p.alpha});
+                if (p.trail.length > 10) p.trail.shift();
+                for (let t = 0; t < p.trail.length; t++) {
+                    ctx.globalAlpha = p.trail[t].alpha * (t / p.trail.length);
+                    ctx.beginPath();
+                    ctx.arc(p.trail[t].x, p.trail[t].y, p.size/2, 0, 2 * Math.PI);
+                    ctx.fillStyle = p.color;
+                    ctx.fill();
+                }
                 ctx.globalAlpha = p.alpha;
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, 4, 0, 2 * Math.PI);
+                ctx.arc(p.x, p.y, p.size, 0, 2 * Math.PI);
                 ctx.fillStyle = p.color;
+                ctx.shadowColor = p.color;
+                ctx.shadowBlur = 20;
                 ctx.fill();
+                ctx.shadowBlur = 0;
                 p.x += p.vx;
                 p.y += p.vy;
-                p.vy += 0.05; // gravity
-                p.alpha -= 0.012;
+                p.vy += 0.04 + Math.random()*0.02; // gravity
+                p.alpha -= 0.012 + Math.random()*0.008;
                 if (p.alpha <= 0) particles.splice(i, 1);
             });
             ctx.globalAlpha = 1;
