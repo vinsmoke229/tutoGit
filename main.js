@@ -1,9 +1,7 @@
 const canvas = document.getElementById('fireworks');
 const ctx = canvas.getContext('2d');
 const sounds = [
-    "https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae7e2.mp3",
-    "https://cdn.pixabay.com/audio/2022/03/15/audio_115b9e3e5a.mp3",
-    "https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae7e2.mp3"
+    "https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"
 ];
 let particles = [];
 let flashAlpha = 0;
@@ -110,11 +108,38 @@ function animate() {
 }
 animate();
 
-// Pour rendre la fonction accessible au bouton HTML
+// Fonction interne qui crée les feux d'artifice
+function createFireworks(x, y) {
+    playRandomSound();
+    flashAlpha = 0.7;
+    shake = 10;
+    for (let j = 0; j < 3 + Math.floor(Math.random()*3); j++) {
+        const offsetX = x + (Math.random()-0.5)*100;
+        const offsetY = y + (Math.random()-0.5)*100;
+        const count = 50 + Math.floor(Math.random()*30);
+        const size = 2 + Math.random()*4;
+        for (let i = 0; i < count; i++) {
+            const angle = (i / count) * 2 * Math.PI;
+            const speed = Math.random() * 5 + 2;
+            particles.push({
+                x: offsetX,
+                y: offsetY,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                alpha: 1,
+                color: randomColor(),
+                size: size,
+                trail: []
+            });
+        }
+    }
+}
+
+// Fonction globale appelée par le bouton
 window.launchFireworks = function(x, y) {
     if (typeof x !== "number" || typeof y !== "number") {
         x = window.innerWidth / 2;
         y = window.innerHeight / 2;
     }
-    launchFireworks(x, y);
+    createFireworks(x, y);
 };
