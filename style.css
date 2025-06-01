@@ -1,0 +1,50 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f2027, #2c5364, #ff9800, #f7971e);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease-in-out infinite;
+    color: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+button {
+    margin-top: 40vh;
+    font-size: 2em;
+    padding: 1em 2em;
+    border-radius: 15px;
+    border: none;
+    background: #ff9800;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 20px #ff9800, 0 0 40px #fff700;
+    transition: transform 0.2s, box-shadow 0.2s;
+    outline: none;
+    position: relative;
+    z-index: 2;
+}
+
+button:hover {
+    transform: scale(1.1) rotate(-2deg);
+    box-shadow: 0 0 40px #ff9800, 0 0 80px #fff700;
+    background: #fff700;
+    color: #111;
+}
+
+#fireworks {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+}
