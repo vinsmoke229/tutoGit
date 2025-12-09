@@ -28,7 +28,7 @@ function launchFireworks(x, y) {
     playRandomSound();
     flashAlpha = 0.7;
     shake = 10;
-    // Plusieurs explosions autour du point
+
     for (let j = 0; j < 3 + Math.floor(Math.random()*3); j++) {
         const offsetX = x + (Math.random()-0.5)*100;
         const offsetY = y + (Math.random()-0.5)*100;
@@ -62,7 +62,7 @@ canvas.addEventListener('mousemove', e => {
 });
 
 function animate() {
-    // Effet de vibration
+    // effet de vibration
     if (shake > 0) {
         canvas.style.transform = `translate(${(Math.random()-0.5)*shake}px, ${(Math.random()-0.5)*shake}px)`;
         shake *= 0.85;
@@ -96,7 +96,7 @@ function animate() {
         p.alpha -= 0.012 + Math.random()*0.008;
         if (p.alpha <= 0) particles.splice(i, 1);
     });
-    // Flash lumineux
+    // flash lumineus
     if (flashAlpha > 0) {
         ctx.globalAlpha = flashAlpha;
         ctx.fillStyle = "#fff";
@@ -108,7 +108,7 @@ function animate() {
 }
 animate();
 
-// Fonction interne qui crée les feux d'artifice
+//  crée les feux d'artifices
 function createFireworks(x, y) {
     playRandomSound();
     flashAlpha = 0.7;
@@ -135,7 +135,6 @@ function createFireworks(x, y) {
     }
 }
 
-// Fonction globale appelée par le bouton
 window.launchFireworks = function(x, y) {
     if (typeof x !== "number" || typeof y !== "number") {
         x = window.innerWidth / 2;
