@@ -3,13 +3,6 @@
 Ce projet propose une animation de feu d’artifice impressionnante en HTML, CSS et JavaScript.  
 Clique sur le bouton ou sur le canvas pour déclencher des explosions colorées et sonores !
 
-## Fonctionnalités
-
-- Feux d’artifice animés et colorés
-- Effets sonores d’explosion
-- Effet de flash et de vibration à chaque explosion
-- Responsive : s’adapte à la taille de la fenêtre
-
 ## Utilisation
 
 1. Ouvre `index.html` dans ton navigateur.
@@ -23,8 +16,7 @@ Clique sur le bouton ou sur le canvas pour déclencher des explosions colorées 
 
 ## Astuce
 
-Si le son ne fonctionne pas, vérifie que ton navigateur autorise la lecture audio automatique ou utilise un fichier audio local compatible.
-
+Si le son ne fonctionne pas, vérifie que ton navigateur autorise la lecture audio automatique.
 ---
 
-Projet réalisé pour découvrir l’animation et l’interactivité web 🎇
+Projet réalisé pour découvrir l’animation ....
